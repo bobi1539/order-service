@@ -1,8 +1,11 @@
 package com.test.order.service.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -15,7 +18,6 @@ import java.util.UUID;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "product_id")
     private UUID productId;
 

@@ -1,8 +1,8 @@
 package com.test.order.service.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -15,7 +15,6 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "customer_id")
     private UUID customerId;
 

@@ -21,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto addProduct(ProductRequestDto requestDto) {
+        checkProductPrice(requestDto.getProductPrice());
         Product product = Product.builder()
                 .productId(UUID.randomUUID())
                 .productPrice(requestDto.getProductPrice())
@@ -33,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDto editProduct(String productId, ProductRequestDto requestDto) {
+        checkProductPrice(requestDto.getProductPrice());
         Product product = findByProductId(productId);
         product.setProductPrice(requestDto.getProductPrice());
         product.setProductDescription(requestDto.getProductDescription());
@@ -63,5 +65,13 @@ public class ProductServiceImpl implements ProductService {
                 .productDescription(product.getProductDescription())
                 .stock(product.getStock())
                 .build();
+    }
+
+    private void checkProductPrice(String productPrice) {
+        try {
+            Double.parseDouble(productPrice);
+        } catch (Exception e) {
+            throw new BusinessException(GlobalMessage.PRODUCT_PRICE_NOT_VALID);
+        }
     }
 }
