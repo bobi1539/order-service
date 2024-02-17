@@ -1,0 +1,11 @@
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    doc-expansion: none
