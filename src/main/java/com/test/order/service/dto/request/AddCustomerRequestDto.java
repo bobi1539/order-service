@@ -10,7 +10,6 @@ import java.util.UUID;
 @Setter
 @Builder
 public class AddCustomerRequestDto {
-    private UUID customerId;
     private String customerName;
     private String address;
     private Integer phone;
