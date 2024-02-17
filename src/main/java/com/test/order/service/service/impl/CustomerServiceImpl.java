@@ -1,9 +1,11 @@
 package com.test.order.service.service.impl;
 
+import com.test.order.service.constant.GlobalMessage;
 import com.test.order.service.dto.request.AddCustomerRequestDto;
 import com.test.order.service.dto.request.UpdateCustomerRequestDto;
 import com.test.order.service.dto.response.CustomerResponseDto;
 import com.test.order.service.entity.Customer;
+import com.test.order.service.helper.BusinessException;
 import com.test.order.service.repository.CustomerRepository;
 import com.test.order.service.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -27,21 +29,41 @@ public class CustomerServiceImpl implements CustomerService {
                 .phone(requestDto.getPhone())
                 .build();
         Customer customerSaved = customerRepository.save(customer);
-        return CustomerResponseDto.builder()
-                .customerId(customerSaved.getCustomerId())
-                .customerName(customerSaved.getCustomerName())
-                .address(customerSaved.getAddress())
-                .phone(customerSaved.getPhone())
-                .build();
+        return buildResponseDto(customerSaved);
     }
 
     @Override
     public CustomerResponseDto updateCustomer(String customerId, UpdateCustomerRequestDto requestDto) {
-        return null;
+        Customer customer = findByCustomerId(customerId);
+        customer.setCustomerName(requestDto.getCustomerName());
+        customer.setAddress(requestDto.getAddress());
+        customer.setPhone(requestDto.getPhone());
+        Customer customerUpdated = customerRepository.save(customer);
+        return buildResponseDto(customerUpdated);
     }
 
     @Override
     public CustomerResponseDto getCustomerById(String customerId) {
-        return null;
+        Customer customer = findByCustomerId(customerId);
+        return buildResponseDto(customer);
+    }
+
+    private Customer findByCustomerId(String customerId) {
+        UUID id;
+        try {
+            id = UUID.fromString(customerId);
+        } catch (Exception e) {
+            throw new BusinessException(GlobalMessage.UUID_NOT_VALID);
+        }
+        return customerRepository.findById(id).orElseThrow(() -> new BusinessException(GlobalMessage.DATA_NOT_FOUND));
+    }
+
+    private CustomerResponseDto buildResponseDto(Customer customer) {
+        return CustomerResponseDto.builder()
+                .customerId(customer.getCustomerId())
+                .customerName(customer.getCustomerName())
+                .address(customer.getAddress())
+                .phone(customer.getPhone())
+                .build();
     }
 }
