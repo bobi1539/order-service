@@ -9,6 +9,9 @@ spring:
     username: bobirival
     password: password@147
     url: jdbc:postgresql://localhost:5432/order-service
+  springdoc:
+    api-docs:
+      path:/api-docs
   jpa:
     show-sql: false
     hibernate:
