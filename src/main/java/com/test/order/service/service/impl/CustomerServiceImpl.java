@@ -1,8 +1,7 @@
 package com.test.order.service.service.impl;
 
 import com.test.order.service.constant.GlobalMessage;
-import com.test.order.service.dto.request.AddCustomerRequestDto;
-import com.test.order.service.dto.request.UpdateCustomerRequestDto;
+import com.test.order.service.dto.request.CustomerRequestDto;
 import com.test.order.service.dto.response.CustomerResponseDto;
 import com.test.order.service.entity.Customer;
 import com.test.order.service.helper.BusinessException;
@@ -21,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public CustomerResponseDto addCustomer(AddCustomerRequestDto requestDto) {
+    public CustomerResponseDto addCustomer(CustomerRequestDto requestDto) {
         Customer customer = Customer.builder()
                 .customerId(UUID.randomUUID())
                 .customerName(requestDto.getCustomerName())
@@ -33,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponseDto updateCustomer(String customerId, UpdateCustomerRequestDto requestDto) {
+    public CustomerResponseDto editCustomer(String customerId, CustomerRequestDto requestDto) {
         Customer customer = findByCustomerId(customerId);
         customer.setCustomerName(requestDto.getCustomerName());
         customer.setAddress(requestDto.getAddress());
@@ -44,8 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDto getCustomerById(String customerId) {
-        Customer customer = findByCustomerId(customerId);
-        return buildResponseDto(customer);
+        return buildResponseDto(findByCustomerId(customerId));
     }
 
     private Customer findByCustomerId(String customerId) {

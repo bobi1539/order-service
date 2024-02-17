@@ -10,4 +10,5 @@ public final class ApiEndpoint {
 
     public static final String BASE_ENDPOINT = "/api/order";
     public static final String CUSTOMER = BASE_ENDPOINT + "/customers";
+    public static final String PRODUCT = BASE_ENDPOINT + "/products";
 }

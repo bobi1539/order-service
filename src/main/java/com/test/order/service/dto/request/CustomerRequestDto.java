@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class UpdateCustomerRequestDto {
+public class CustomerRequestDto {
     private String customerName;
     private String address;
     private Integer phone;

@@ -1,8 +1,7 @@
 package com.test.order.service.controller;
 
 import com.test.order.service.constant.ApiEndpoint;
-import com.test.order.service.dto.request.AddCustomerRequestDto;
-import com.test.order.service.dto.request.UpdateCustomerRequestDto;
+import com.test.order.service.dto.request.CustomerRequestDto;
 import com.test.order.service.dto.response.CustomerResponseDto;
 import com.test.order.service.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -17,15 +16,15 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping
-    public CustomerResponseDto addCustomer(@RequestBody AddCustomerRequestDto requestDto) {
+    public CustomerResponseDto addCustomer(@RequestBody CustomerRequestDto requestDto) {
         return customerService.addCustomer(requestDto);
     }
 
     @PutMapping("/{customerId}")
-    public CustomerResponseDto updateCustomer(
-            @PathVariable String customerId, @RequestBody UpdateCustomerRequestDto requestDto
+    public CustomerResponseDto editCustomer(
+            @PathVariable String customerId, @RequestBody CustomerRequestDto requestDto
     ) {
-        return customerService.updateCustomer(customerId, requestDto);
+        return customerService.editCustomer(customerId, requestDto);
     }
 
     @GetMapping("/{customerId}")
